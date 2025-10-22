@@ -175,13 +175,26 @@ function Tetris() {
 
   const drop = useCallback(() => {
     if (!currentPiece || isPaused || gameOver) return
+
+    // Find the lowest position the piece can drop to
     let newY = currentPos.y
     while (canMove(currentPiece, { x: currentPos.x, y: newY + 1 }, board)) {
       newY++
     }
-    setCurrentPos({ x: currentPos.x, y: newY })
-    setTimeout(moveDown, 50)
-  }, [currentPiece, currentPos, board, isPaused, gameOver, moveDown])
+
+    // Merge the piece at the drop position
+    const mergedBoard = mergePiece(currentPiece, { x: currentPos.x, y: newY }, currentType, board)
+    const { board: clearedBoard, linesCleared } = clearLines(mergedBoard)
+
+    setBoard(clearedBoard)
+    setScore(prev => prev + linesCleared * 100 * level)
+
+    if (linesCleared > 0 && score > 0 && score % 500 === 0) {
+      setLevel(prev => prev + 1)
+    }
+
+    spawnPiece()
+  }, [currentPiece, currentPos, currentType, board, isPaused, gameOver, spawnPiece, level, score])
 
   useEffect(() => {
     const handleKeyPress = (e) => {
