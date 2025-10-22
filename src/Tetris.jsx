@@ -289,25 +289,20 @@ function Tetris() {
   return (
     <div className="tetris-container">
       <div className="tetris-header">
-        <h1>Tetris Game</h1>
-        <p>Use arrow keys to move, up to rotate, space to drop, P to pause</p>
+        <h1>Tetris</h1>
+        <div className="header-stats">
+          <div className="stat-item">
+            <span className="stat-label">Score</span>
+            <span className="stat-value">{score}</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-label">Level</span>
+            <span className="stat-value">{level}</span>
+          </div>
+        </div>
       </div>
 
       <div className="tetris-game">
-        <div className="tetris-sidebar">
-          <div className="tetris-info">
-            <h2>Score</h2>
-            <p className="score-display">{score}</p>
-          </div>
-          <div className="tetris-info">
-            <h2>Level</h2>
-            <p className="level-display">{level}</p>
-          </div>
-          <button className="reset-button" onClick={resetGame}>
-            New Game
-          </button>
-        </div>
-
         <div className="tetris-board-container">
           {gameOver && (
             <div className="game-over-overlay">
@@ -319,11 +314,70 @@ function Tetris() {
           {isPaused && !gameOver && (
             <div className="pause-overlay">
               <h2>Paused</h2>
-              <p>Press P to continue</p>
+              <p>Tap Resume to continue</p>
             </div>
           )}
           <div className="tetris-board">
             {renderBoard()}
+          </div>
+        </div>
+
+        <div className="mobile-controls">
+          <div className="control-row">
+            <button
+              className="control-button action-button"
+              onClick={() => setIsPaused(prev => !prev)}
+              disabled={gameOver}
+            >
+              {isPaused ? '▶' : '⏸'}
+            </button>
+            <button
+              className="control-button action-button"
+              onClick={resetGame}
+            >
+              🔄
+            </button>
+          </div>
+          <div className="control-row">
+            <button
+              className="control-button rotate-button"
+              onClick={rotate}
+              disabled={gameOver || isPaused}
+            >
+              ↻
+            </button>
+          </div>
+          <div className="control-row main-controls">
+            <button
+              className="control-button direction-button"
+              onClick={moveLeft}
+              disabled={gameOver || isPaused}
+            >
+              ←
+            </button>
+            <button
+              className="control-button direction-button"
+              onClick={moveDown}
+              disabled={gameOver || isPaused}
+            >
+              ↓
+            </button>
+            <button
+              className="control-button direction-button"
+              onClick={moveRight}
+              disabled={gameOver || isPaused}
+            >
+              →
+            </button>
+          </div>
+          <div className="control-row">
+            <button
+              className="control-button drop-button"
+              onClick={drop}
+              disabled={gameOver || isPaused}
+            >
+              DROP
+            </button>
           </div>
         </div>
       </div>
