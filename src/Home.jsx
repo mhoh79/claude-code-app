@@ -28,12 +28,19 @@ function Home() {
         </div>
 
         <div className="games-section">
-          <h2>Try the Games!</h2>
+          <h2>Try the Apps!</h2>
           <Link to="/tetris" className="game-link">
             <div className="game-card">
               <h3>Tetris</h3>
               <p>Classic falling blocks game</p>
               <span className="play-button">Play Now →</span>
+            </div>
+          </Link>
+          <Link to="/calculator" className="game-link">
+            <div className="game-card">
+              <h3>Scientific Calculator</h3>
+              <p>Advanced calculator with scientific functions</p>
+              <span className="play-button">Use Now →</span>
             </div>
           </Link>
         </div>
